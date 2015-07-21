@@ -35,3 +35,4 @@ end
 gem 'cancancan'
 gem 'devise'
 gem 'slim-rails'
+gem 'figaro'

@@ -1,3 +1,22 @@
+module Devise
+  module Strategies
+    class AuthWithTokenFromHeader < Base
+      def valid?
+        request.headers["Authorization"].present?
+      end
+
+      def authenticate!
+        if request.headers["Authorization"] == "VALUE_THAT_SHOULDNT_BE_HARDCODED_BUT_IS_RIGHT_NOW"
+          similarly_hardcoded_user = User.find 1
+          success! similarly_hardcoded_user
+        else
+          fail! "That wasn't the hardcoded token"
+        end
+      end
+    end
+  end
+end
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -6,7 +25,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '6a5d3719798400ffb237d9743e3c90de231e786c684fc4efe260dcd91f15e4c8d8d4848ad71a59df2b05c3c35282a5620d1eb5ecf418d776c0a3154662081688'
+  # config.secret_key = '796f2b04dbd103c265f659bb46453defb7bb4fb901b9a00bba701f23a8637bf752d5c3be05ccaa0bb848fae676276c9e70928dad1a1568d57601b9c493263ba2'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -99,7 +118,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = 'e6c5c721457a1fd879ee063bc3985ff40ad2424e205c65a199b4dabd3776f66d944519c4b9f0d4cbb17af0b429015ab03ca750c8fc43b9ac4511038c7ae14f56'
+  # config.pepper = '35234475ac1c53d3f2a829febbc2f2d0da66022f7474dfc76cb1a3b634834959259b4e537de6d8ae6c1a5a8d460f529d868724ef0bb43805e3c31a8fee8d8941'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -262,4 +281,9 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+
+  config.warden do |manager|
+    manager.strategies.add(:auth_from_token, Devise::Strategies::AuthWithTokenFromHeader)
+    manager.default_strategies(scope: :user).unshift :auth_from_token
+  end
 end
