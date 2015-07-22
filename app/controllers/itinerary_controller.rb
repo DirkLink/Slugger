@@ -1,4 +1,7 @@
 class ItineraryController < ApplicationController
+  #  before_action do
+  #   request.format = :json
+  # end
   def index
     @first_name = "Dirk"
     @email = "Dirk@sluggr.com"

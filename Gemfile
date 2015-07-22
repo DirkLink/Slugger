@@ -36,3 +36,5 @@ gem 'cancancan'
 gem 'devise'
 gem 'slim-rails'
 gem 'figaro'
+gem 'httparty'
+gem "twitter-bootstrap-rails"
