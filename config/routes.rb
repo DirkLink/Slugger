@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # devise_for :users, controllers: { sessions: "devise/sessions", registrations: "users/registrations" }
-  devise_for :users
-  root to: 'itinerary#index'
+  # devise_for :users
+  resources :users
+  root to: 'itinerary#home'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -10,4 +10,7 @@ class ItineraryController < ApplicationController
     @home_locale = "Reston Town Center"
     @work_locale = "Dupont Circle"
   end
+  def home
+    render json: current_user
+  end
 end

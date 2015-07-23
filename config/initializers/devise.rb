@@ -2,15 +2,15 @@ module Devise
   module Strategies
     class AuthWithTokenFromHeader < Base
       def valid?
-        request.headers["Authorization"].present?
+        request.headers["Email"].present?
       end
 
       def authenticate!
-        if request.headers["Authorization"] == "VALUE_THAT_SHOULDNT_BE_HARDCODED_BUT_IS_RIGHT_NOW"
-          similarly_hardcoded_user = User.find 1
-          success! similarly_hardcoded_user
+        if valid?
+          user = User.find_by_email request.headers["Email"]
+          success! user
         else
-          fail! "That wasn't the hardcoded token"
+          fail! "No Email Provided"
         end
       end
     end
