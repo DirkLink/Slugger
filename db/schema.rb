@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723144454) do
+ActiveRecord::Schema.define(version: 20150723193816) do
 
   create_table "badges", force: :cascade do |t|
     t.integer  "user_id"
@@ -33,14 +33,9 @@ ActiveRecord::Schema.define(version: 20150723144454) do
     t.datetime "updated_at",      null: false
   end
 
-  create_table "demo_users", force: :cascade do |t|
-    t.string   "email",      default: "", null: false
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "username"
-    t.decimal  "level"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "itineraries", force: :cascade do |t|

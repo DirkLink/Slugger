@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   validates_confirmation_of    :password, :on=>:create
   validates_length_of    :password, :within => Devise.password_length, :allow_blank => true
   
-  has_many :itineraries
-  has_many :preferences
+  has_one :itinerary
+  has_one :preference
   has_many :badges
-  has_many :cars
+  has_one :car
 end

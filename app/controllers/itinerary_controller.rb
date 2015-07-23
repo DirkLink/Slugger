@@ -1,7 +1,5 @@
 class ItineraryController < ApplicationController
-  #  before_action do
-  #   request.format = :json
-  # end
+
   def index
     @first_name = "Dirk"
     @email = "Dirk@sluggr.com"
@@ -12,5 +10,19 @@ class ItineraryController < ApplicationController
   end
   def home
     render json: current_user
+  end
+
+  def create
+    itin = current_user.itinerary.new(
+          morning_time: params[:morning_time],
+          evening_time: params[:evening_time],
+          home_locale:  params[:home_locale],
+          work_locale:  params[:work_locale]
+        )
+    if itin.save
+      render json: itin
+    else 
+      render json: { error: "itinerary not saved" }
+    end
   end
 end

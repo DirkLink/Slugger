@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  # devise_for :users, controllers: { sessions: "devise/sessions", registrations: "users/registrations" }
-  # devise_for :users
-  resources :users
-  root to: 'itinerary#home'
+  devise_for :users
+  resources :itinerary
+  root to: 'demo_user#login'
 
+  post '/demo_user/create', to: 'demo_user#register'
+  put '/demo_user/edit' , to: 'demo_user#edit'
+  get '/demo_users' , to: 'demo_user#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

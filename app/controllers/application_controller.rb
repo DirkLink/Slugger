@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   # def home
   #   render json: current_user
   # end
+   before_action do
+    request.format = :json
+  end
   
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
