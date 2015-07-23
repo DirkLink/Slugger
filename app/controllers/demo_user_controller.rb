@@ -23,33 +23,26 @@ class DemoUserController < ApplicationController
           username:   params[:username],
         )
     if new_user.save
-      render json: new_user
+      itin = Itinerary.new
+      itin.user_id = new_user.id
+      itin.save
+      render json: { user: new_user, itinerary: itin }
     else 
       render json: { error: "registration failed" }
     end
   end
 
-  def edit
+  def edit #TODO - Implement background worker to find lat/lon
     user = current_user
     user.first_name = params[:user][:first_name]
     user.last_name  = params[:user][:last_name] 
     user.email      = params[:user][:email] 
     user.username   = params[:user][:username]
-    
-    if current_user.itinerary
-      itin = current_user.itinerary
-      itin.morning_time = params[:itinerary][:morning_time]
-      itin.evening_time = params[:itinerary][:evening_time]
-      itin.home_locale = params[:itinerary][:home_locale]
-      itin.work_locale = params[:itinerary][:work_locale]
-    else
-      itin = Itinerary.new
-      itin.morning_time = params[:itinerary][:morning_time]
-      itin.evening_time = params[:itinerary][:evening_time]
-      itin.home_locale = params[:itinerary][:home_locale]
-      itin.work_locale = params[:itinerary][:work_locale]
-      itin.user_id = current_user.id
-    end
+    itin = current_user.itinerary
+    itin.morning_time = params[:itinerary][:morning_time]
+    itin.evening_time = params[:itinerary][:evening_time]
+    itin.home_locale = params[:itinerary][:home_locale]
+    itin.work_locale = params[:itinerary][:work_locale]
 
     if user.save && itin.save    
       render json: { user: current_user, itinerary: itin }

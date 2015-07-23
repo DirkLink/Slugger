@@ -1,3 +1,7 @@
 class Itinerary < ActiveRecord::Base
-  belongs_to :user
+  has_one :user
+
+  def distance
+    #TODO Implement haversine
+  end
 end
