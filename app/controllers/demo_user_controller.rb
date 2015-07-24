@@ -34,17 +34,19 @@ class DemoUserController < ApplicationController
 
   def edit #TODO - Implement background worker to find lat/lon
     user = current_user
-    user.first_name = params[:user][:first_name]
-    user.last_name  = params[:user][:last_name] 
-    user.email      = params[:user][:email] 
-    user.username   = params[:user][:username]
+    # user.first_name = params[:user][:first_name]
+    # user.last_name  = params[:user][:last_name] 
+    # user.email      = params[:user][:email] 
+    # user.username   = params[:user][:username]
     itin = current_user.itinerary
     itin.morning_time = params[:itinerary][:morning_time]
     itin.evening_time = params[:itinerary][:evening_time]
     itin.home_locale = params[:itinerary][:home_locale]
     itin.work_locale = params[:itinerary][:work_locale]
 
-    if user.save && itin.save    
+    user_params = params.require(:user).permit :first_name, :last_name, :email, :username
+    if user.update(user_params) && itin.save
+      MapsJob.perform_later itin   
       render json: { user: current_user, itinerary: itin }
     else
       render json: { error: "update failed" }

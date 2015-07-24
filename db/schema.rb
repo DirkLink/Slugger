@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723193816) do
+ActiveRecord::Schema.define(version: 20150724141004) do
 
   create_table "badges", force: :cascade do |t|
     t.integer  "user_id"
@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(version: 20150723193816) do
     t.string   "day"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.float    "home_lat"
+    t.float    "home_lng"
+    t.float    "work_lat"
+    t.float    "work_lng"
   end
 
   create_table "preferences", force: :cascade do |t|

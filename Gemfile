@@ -37,6 +37,7 @@ gem 'devise'
 gem 'slim-rails'
 gem 'figaro'
 gem 'httparty'
-gem "twitter-bootstrap-rails"
+gem 'twitter-bootstrap-rails'
 gem 'rack-cors'
 gem 'haversine'
+gem 'sidekiq'
