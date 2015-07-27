@@ -22,6 +22,7 @@ class DemoUserController < ApplicationController
           first_name: params[:first_name],
           last_name:  params[:last_name],
           username:   params[:username],
+          driver:     params[:driver] 
         )
     if new_user.save
       itin = Itinerary.new
@@ -41,9 +42,11 @@ class DemoUserController < ApplicationController
     itin.home_locale = params[:itinerary][:home_locale]
     itin.work_locale = params[:itinerary][:work_locale]
 
-    user_params = params.require(:user).permit :first_name, :last_name, :email, :username
+    user_params = params.require(:user).permit :first_name, :last_name, :email, :username, :driver
     if user.update(user_params) && itin.save
-      MapsJob.perform_later itin   
+      if itin.home_locale && itin.work_locale
+        MapsJob.perform_later itin   
+      end
       render json: { user: current_user, itinerary: itin }
     else
       render json: { error: "update failed" }
