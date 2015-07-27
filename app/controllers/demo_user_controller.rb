@@ -32,7 +32,7 @@ class DemoUserController < ApplicationController
     end
   end
 
-  def edit #TODO - Implement background worker to find lat/lon
+  def edit
     user = current_user
     # user.first_name = params[:user][:first_name]
     # user.last_name  = params[:user][:last_name] 

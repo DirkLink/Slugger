@@ -9,7 +9,7 @@ class Itinerary < ActiveRecord::Base
       work_lng: locales.work_lng) 
   end
 
-  def distance
-    #TODO Implement haversine
+  def distance user1, user2
+    Haversine.distance()
   end
 end

@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   devise_for :users
   resources :itinerary
@@ -6,6 +7,10 @@ Rails.application.routes.draw do
   post '/demo_user/create', to: 'demo_user#register'
   put '/demo_user/edit' , to: 'demo_user#edit'
   get '/demo_users' , to: 'demo_user#index'
+
+  if Rails.env.development?
+    mount Sidekiq::Web, at:"/sidekiq"
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
