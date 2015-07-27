@@ -27,7 +27,7 @@ class GroupController < ApplicationController
     else
       group = Group.new(
         driver_id: current_user.id,
-        rider_one_id: params[:rider]
+        rider_one_id: params[:rider_id]
         )
       if group.save
         render json: {group: group}
