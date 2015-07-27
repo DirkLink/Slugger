@@ -14,4 +14,18 @@ class User < ActiveRecord::Base
   has_one :preference
   has_many :badges
   has_one :car
+
+
+  def self.all_except(user)
+    where.not(id: user)
+  end
+
+
+  def self.nearest_overall
+    users = User.all_except(current_user).joins(:itinerary).where("home_lat is not null OR home_lng is not null OR work_lat is not null OR work_lng is not null")
+    users = users.select do |u|
+       home_distance(current_user.itinerary, u.itinerary) < 5 && work_distance(current_user.itinerary, u.itinerary) < 5
+    end
+    users
+  end 
 end

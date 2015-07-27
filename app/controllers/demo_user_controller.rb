@@ -1,6 +1,7 @@
 class DemoUserController < ApplicationController
   def index
-    @users = User.all.includes(:itinerary)
+    @users = User.nearest_overall
+    # @users = User.all.includes(:itinerary)
   end
   def login
     if current_user
@@ -34,10 +35,6 @@ class DemoUserController < ApplicationController
 
   def edit
     user = current_user
-    # user.first_name = params[:user][:first_name]
-    # user.last_name  = params[:user][:last_name] 
-    # user.email      = params[:user][:email] 
-    # user.username   = params[:user][:username]
     itin = current_user.itinerary
     itin.morning_time = params[:itinerary][:morning_time]
     itin.evening_time = params[:itinerary][:evening_time]
