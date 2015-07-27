@@ -1,6 +1,6 @@
 class DemoUserController < ApplicationController
   def index
-    @users = User.nearest_overall
+    @users = current_user.nearest_overall
     # @users = User.all.includes(:itinerary)
   end
   def login

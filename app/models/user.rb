@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
 
-  def self.nearest_overall
+  def nearest_overall
     users = User.all_except(current_user).joins(:itinerary).where("home_lat is not null OR home_lng is not null OR work_lat is not null OR work_lng is not null")
     users = users.select do |u|
        home_distance(current_user.itinerary, u.itinerary) < 20 && work_distance(current_user.itinerary, u.itinerary) < 20
