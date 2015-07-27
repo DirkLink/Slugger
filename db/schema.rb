@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724141004) do
+ActiveRecord::Schema.define(version: 20150727181125) do
 
   create_table "badges", force: :cascade do |t|
     t.integer  "user_id"
@@ -34,8 +34,13 @@ ActiveRecord::Schema.define(version: 20150724141004) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "driver_id"
+    t.integer  "rider_one_id"
+    t.integer  "rider_two_id"
+    t.integer  "rider_three_id"
+    t.integer  "rider_four_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "itineraries", force: :cascade do |t|
