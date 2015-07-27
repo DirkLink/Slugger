@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   has_one :preference
   has_many :badges
   has_one :car
-  has_one :group
+  has_one :group, foreign_key: "driver_id"
 
 
   def self.all_except(user)

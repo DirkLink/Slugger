@@ -7,19 +7,19 @@ class GroupController < ApplicationController
     if current_user.group      
       group = current_user.group
       rider = User.find params[:rider_id]
-      if group.rider_one_id == nil
+      if group.rider_one_id
         group.update(rider_one_id: rider.id)
         render json: {group: group} and return
       end
-      if group.rider_two_id == nil
+      if group.rider_two_id
         group.update(rider_two_id: rider.id)
         render json: {group: group} and return
       end
-      if group.rider_three_id == nil
+      if group.rider_three_id
         group.update(rider_three_id: rider.id)
         render json: {group: group} and return
       end
-      if group.rider_four_id == nil
+      if group.rider_four_id
         group.update(rider_four_id: rider.id)
         render json: {group: group} and return
       end 
