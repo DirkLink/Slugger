@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
   has_one :car
   has_one :group, foreign_key: "driver_id"
 
-
   def self.all_except(user)
     where.not(id: user.id)
   end
