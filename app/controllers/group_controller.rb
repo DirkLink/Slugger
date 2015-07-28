@@ -1,7 +1,11 @@
 class GroupController < ApplicationController
-  def index
+  def index 
     group = current_user.in_a_group?
-    @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
+    if group
+      @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
+    else
+      render json: {message: "This user is not in a group"}
+    end
   end
 
   def create
@@ -41,4 +45,35 @@ class GroupController < ApplicationController
       end
     end
   end
+
+  def leave
+    group = current_user.in_a_group?
+    if group && !current_user.is_a_driver?
+      if group.rider_one.id == current_user.id
+        group.update(rider_one_id: nil)
+      end
+      if group.rider_two.id == current_user.id
+        group.update(rider_two_id: nil)
+      end
+      if group.rider_three.id == current_user.id
+        group.update(rider_three_id: nil)
+      end
+      if group.rider_four.id == current_user.id
+        group.update(rider_four_id: nil)
+      end
+      render json: {message: "User no longer in group"}
+    else
+      render json: {message: "Something went wrong"}
+    end
+  end
+
+  def disband
+    group = current_user.in_a_group?
+    if group.driver.id == current_user.id
+      group.delete
+      render json: {message: "Group disbanded"}
+    end
+    render json: {error: "User is not group leader"}
+  end
+
 end

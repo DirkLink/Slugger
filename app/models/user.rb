@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
     where.not(id: user.id)
   end
 
+  def is_a_driver?
+    Group.find_by_driver_id(self.id)
+  end
   def in_a_group?
     Group.find_by_driver_id(self.id) || Group.find_by_rider_one_id(self.id) || Group.find_by_rider_two_id(self.id) || Group.find_by_rider_three_id(self.id) || Group.find_by_rider_four_id(self.id)
   end

@@ -1,7 +1,6 @@
 class DemoUserController < ApplicationController
-  def index #TODO Filter Users Already In Groups
+  def index
     @users = current_user.nearest_overall
-    # @users = User.all.includes(:itinerary)
   end
   def login
     if current_user

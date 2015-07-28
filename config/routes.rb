@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get '/demo_users' , to: 'demo_user#index'
   get '/invite' , to: 'group#create'
   get '/group' , to: 'group#index'
+  delete '/group/disband' , to: 'group#disband'
+  put '/group/leave' , to: 'group#leave'
 
   if Rails.env.development?
     mount Sidekiq::Web, at:"/sidekiq"
