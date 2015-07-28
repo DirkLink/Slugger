@@ -40,6 +40,7 @@ class GroupController < ApplicationController
         )
       if group.save
         @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
+        render :index
       else
         render json: {error: "Group Not Saved"}
       end
