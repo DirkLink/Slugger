@@ -49,16 +49,16 @@ class GroupController < ApplicationController
   def leave
     group = current_user.in_a_group?
     if group && !current_user.is_a_driver?
-      if group.rider_one.id == current_user.id
+      if group.rider_one == current_user
         group.update(rider_one_id: nil)
       end
-      if group.rider_two.id == current_user.id
+      if group.rider_two == current_user
         group.update(rider_two_id: nil)
       end
-      if group.rider_three.id == current_user.id
+      if group.rider_three == current_user
         group.update(rider_three_id: nil)
       end
-      if group.rider_four.id == current_user.id
+      if group.rider_four == current_user
         group.update(rider_four_id: nil)
       end
       render json: {message: "User no longer in group"}
@@ -69,7 +69,7 @@ class GroupController < ApplicationController
 
   def disband
     group = current_user.in_a_group?
-    if group.driver.id == current_user.id
+    if group.driver == current_user
       group.delete
       render json: {message: "Group disbanded"}
     end
