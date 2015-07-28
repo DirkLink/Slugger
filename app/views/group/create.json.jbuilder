@@ -1,5 +1,5 @@
 json.group do
-  json.array![
+  json.array! [
     json.user do
       json.id @group.driver.id
       json.email @group.driver.email

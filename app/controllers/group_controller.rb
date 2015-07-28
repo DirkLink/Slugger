@@ -9,23 +9,19 @@ class GroupController < ApplicationController
       rider = User.find params[:rider_id]
       if group.rider_one_id == nil
         group.update(rider_one_id: rider.id)
-        @group = group
-        return
+        render json: {group: [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]} and return
       end
       if group.rider_two_id == nil
         group.update(rider_two_id: rider.id)
-        @group = group
-        return
+        render json: {group: [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]} and return
       end
       if group.rider_three_id == nil
         group.update(rider_three_id: rider.id)
-        @group = group
-        return
+        render json: {group: [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]} and return
       end
       if group.rider_four_id == nil
         group.update(rider_four_id: rider.id)
-        @group = group
-        return
+        render json: {group: [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]} and return
       end 
       render json: {error: "Group is Full"}
     else
@@ -34,7 +30,7 @@ class GroupController < ApplicationController
         rider_one_id: params[:rider_id]
         )
       if group.save
-        @group = group
+        render json: {group: [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]}
       else
         render json: {error: "Group Not Saved"}
       end
