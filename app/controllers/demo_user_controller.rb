@@ -1,5 +1,5 @@
 class DemoUserController < ApplicationController
-  def index
+  def index #TODO Filter Users Already In Groups
     @users = current_user.nearest_overall
     # @users = User.all.includes(:itinerary)
   end

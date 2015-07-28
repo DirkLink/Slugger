@@ -20,13 +20,16 @@ class User < ActiveRecord::Base
     where.not(id: user.id)
   end
 
+  def in_a_group?
+    Group.find_by_driver_id(self.id) || Group.find_by_rider_one_id(self.id) || Group.find_by_rider_two_id(self.id) || Group.find_by_rider_three_id(self.id) || Group.find_by_rider_four_id(self.id)
+  end
 
   def nearest_overall
     if self.itinerary.home_locale && self.itinerary.work_locale
       radius = 20
       userlist = User.all_except(self).joins(:itinerary).where("home_lat is not null OR home_lng is not null OR work_lat is not null OR work_lng is not null")
       users = userlist.select do |u|
-         u.itinerary.home_distance(self.itinerary) < radius && u.itinerary.work_distance(self.itinerary) < radius
+         u.itinerary.home_distance(self.itinerary) < radius && u.itinerary.work_distance(self.itinerary) < radius && !u.in_a_group?
       end
       users
     else
