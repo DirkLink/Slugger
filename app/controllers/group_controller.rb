@@ -1,6 +1,6 @@
 class GroupController < ApplicationController
   def index
-    group = current_user.group
+    group = current_user.in_a_group?
     @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
   end
 
