@@ -1,44 +1,16 @@
-json.group do
-  json.array! [
-    json.user do
-      json.id @group.driver.id
-      json.email @group.driver.email
-      json.first_name @group.driver.first_name
-      json.last_name @group.driver.last_name
-      json.username @group.driver.username
-      json.driver @group.driver.driver
-    end,
-    json.user do
-      json.id rider_one.id
-      json.email @group.rider_one.email
-      json.first_name @group.rider_one.first_name
-      json.last_name @group.rider_one.last_name
-      json.username @group.rider_one.username
-      json.driver @group.rider_one.driver
-    end,
-    json.user do
-      json.id @group.rider_two.id
-      json.email @group.rider_two.email
-      json.first_name @group.rider_two.first_name
-      json.last_name @group.rider_two.last_name
-      json.username @group.rider_two.username
-      json.driver @group.rider_two.driver
-    end,
-    json.user do
-      json.id @group.rider_three.id
-      json.email @group.rider_three.email
-      json.first_name @group.rider_three.first_name
-      json.last_name @group.rider_three.last_name
-      json.username @group.rider_three.username
-      json.driver @group.rider_three.driver
-    end,
-    json.user do
-      json.id @group.rider_four.id
-      json.email @group.rider_four.email
-      json.first_name @group.rider_four.first_name
-      json.last_name @group.rider_four.last_name
-      json.username @group.rider_four.username
-      json.driver @group.rider_four.driver
-    end
-  ]
-end
+json.group @group do |user|
+  json.id user.id
+  json.email user.email
+  json.first_name user.first_name
+  json.last_name user.last_name
+  json.username user.username
+  json.driver user.driver
+  json.morning_time user.itinerary.morning_time
+  json.evening_time user.itinerary.evening_time
+  json.home_locale user.itinerary.home_locale
+  json.work_locale user.itinerary.work_locale
+  json.home_lat user.itinerary.home_lat
+  json.home_lng user.itinerary.home_lng
+  json.work_lat user.itinerary.work_lat
+  json.work_lng user.itinerary.work_lng
+end 
