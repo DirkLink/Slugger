@@ -72,8 +72,9 @@ class GroupController < ApplicationController
     if group.driver == current_user
       group.delete
       render json: {message: "Group disbanded"}
+    else
+      render json: {error: "User is not group leader"}
     end
-    render json: {error: "User is not group leader"}
   end
 
 end
