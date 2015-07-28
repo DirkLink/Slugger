@@ -9,19 +9,23 @@ class GroupController < ApplicationController
       rider = User.find params[:rider_id]
       if group.rider_one_id == nil
         group.update(rider_one_id: rider.id)
-        render :create and return and return
+        @group = group
+        return
       end
       if group.rider_two_id == nil
         group.update(rider_two_id: rider.id)
-        render :create and return and return
+        @group = group
+        return
       end
       if group.rider_three_id == nil
         group.update(rider_three_id: rider.id)
-        render :create and return and return
+        @group = group
+        return
       end
       if group.rider_four_id == nil
         group.update(rider_four_id: rider.id)
-        render :create and return
+        @group = group
+        return
       end 
       render json: {error: "Group is Full"}
     else
