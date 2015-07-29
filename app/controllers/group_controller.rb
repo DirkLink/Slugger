@@ -1,4 +1,6 @@
 class GroupController < ApplicationController
+  #TODO - Make a development endpoint which shows all the data currently in the database
+
   def index 
     group = current_user.in_a_group?
     if group

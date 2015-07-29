@@ -1,4 +1,10 @@
 class DemoUserController < ApplicationController
+  
+  def data
+    @data = User.all.includes(:itinerary)
+    @groups = Group.all.includes(:driver, :rider_one, :rider_two, :rider_three, :rider_four)
+  end
+
   def index
     @users = current_user.nearest_overall
   end
