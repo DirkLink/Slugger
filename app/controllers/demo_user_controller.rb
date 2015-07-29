@@ -47,7 +47,7 @@ class DemoUserController < ApplicationController
     itin.home_locale = params[:itinerary][:home_locale]
     itin.work_locale = params[:itinerary][:work_locale]
 
-    user_params = params.require(:user).permit :first_name, :last_name, :email, :username, :driver
+    user_params = params.require(:user).permit :first_name, :last_name, :email, :username, :driver, :bio, :preferences
     if user.update(user_params) && itin.save
       if itin.home_locale && itin.work_locale
         MapsJob.perform_later itin   
