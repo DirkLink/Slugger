@@ -17,25 +17,25 @@ class GroupController < ApplicationController
       if group.rider_one_id == nil
         group.update(rider_one_id: rider.id)
         @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider).deliver_later 
+        UserMailer.invite_email(rider, current_user).deliver_later 
         render :index and return
       end
       if group.rider_two_id == nil
         group.update(rider_two_id: rider.id)
         @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider).deliver_later
+        UserMailer.invite_email(rider, current_user).deliver_later
         render :index and return
       end
       if group.rider_three_id == nil
         group.update(rider_three_id: rider.id)
         @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider).deliver_later
+        UserMailer.invite_email(rider, current_user).deliver_later
         render :index and return
       end
       if group.rider_four_id == nil
         group.update(rider_four_id: rider.id)
         @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider).deliver_later
+        UserMailer.invite_email(rider, current_user).deliver_later
         render :index and return
       end 
       render json: {error: "Group is Full"}
@@ -46,7 +46,7 @@ class GroupController < ApplicationController
         )
       if group.save
         @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider).deliver_later
+        UserMailer.invite_email(rider, current_user).deliver_later
         render :index
       else
         render json: {error: "Group Not Saved"}
