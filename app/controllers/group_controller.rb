@@ -40,6 +40,7 @@ class GroupController < ApplicationController
       end 
       render json: {error: "Group is Full"}
     else
+      rider = User.find params[:rider_id]
       group = Group.new(
         driver_id: current_user.id,
         rider_one_id: params[:rider_id]
