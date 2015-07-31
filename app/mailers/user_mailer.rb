@@ -5,6 +5,6 @@ class UserMailer < ApplicationMailer
     @sender = sender
     @recipient = user
     @url = 'https://sluggr.herokuapp.com'
-    mail(to: @recipient, subject: "#{@sender} has invited you to join his group.")
+    mail(to: @recipient.email, subject: "#{@sender.email} has invited you to join his group.")
   end
 end
