@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   post '/demo_user/create', to: 'demo_user#register'
   put '/demo_user/edit' , to: 'demo_user#edit'
   get '/demo_users' , to: 'demo_user#index'
-  get '/invite' , to: 'group#create'
+  get '/invite' , to: 'group#invite'
   get '/group' , to: 'group#index'
   delete '/group/disband' , to: 'group#disband'
   put '/group/leave' , to: 'group#leave'
   get '/data' , to: 'demo_user#data'
+  get '/group/confirm', to: 'group#confirm'
 
   if Rails.env.development?
     mount Sidekiq::Web, at:"/sidekiq"

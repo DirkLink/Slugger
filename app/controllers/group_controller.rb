@@ -1,5 +1,4 @@
 class GroupController < ApplicationController
-  #TODO - Make a development endpoint which shows all the data currently in the database
 
   def index 
     group = current_user.in_a_group?
@@ -10,44 +9,72 @@ class GroupController < ApplicationController
     end
   end
 
-  def create
-    if current_user.group      
-      group = current_user.group
-      rider = User.find params[:rider_id]
+  def confirm
+    url = "sluggr.herokuapp.com"
+    inviter = User.find params[:inviter]
+    rider = User.find params[:invitee]
+    if inviter.group 
       if group.rider_one_id == nil
         group.update(rider_one_id: rider.id)
-        @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider, current_user).deliver_later 
-        render :index and return
+        redirect_to url and return
       end
       if group.rider_two_id == nil
         group.update(rider_two_id: rider.id)
-        @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider, current_user).deliver_later
-        render :index and return
+        redirect_to url and return
       end
       if group.rider_three_id == nil
         group.update(rider_three_id: rider.id)
-        @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider, current_user).deliver_later 
-        render :index and return
+        redirect_to url and return
       end
       if group.rider_four_id == nil
         group.update(rider_four_id: rider.id)
-        @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider, current_user).deliver_later 
+        redirect_to url and return
+      end 
+    else
+        group = Group.new(
+        driver_id: inviter.id,
+        rider_one_id: rider.id
+        )
+      group.save
+      redirect_to url
+    end
+  end
+
+  def invite
+    inviter = User.find params[:inviter]
+    rider = User.find params[:invitee]
+    if inviter.group       
+      group = inviter.group
+      @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
+      if group.rider_one_id == nil
+        UserMailer.invite_email(rider, inviter).deliver_later
+        @group 
+        render :index and return
+      end
+      if group.rider_two_id == nil
+        @group
+        UserMailer.invite_email(rider, inviter).deliver_later
+        render :index and return
+      end
+      if group.rider_three_id == nil
+        @group
+        UserMailer.invite_email(rider, inviter).deliver_later 
+        render :index and return
+      end
+      if group.rider_four_id == nil
+        @group
+        UserMailer.invite_email(rider, inviter).deliver_later 
         render :index and return
       end 
       render json: {error: "Group is Full"}
     else
-      rider = User.find params[:rider_id]
       group = Group.new(
-        driver_id: current_user.id,
-        rider_one_id: params[:rider_id]
+        driver_id: inviter.id,
+        rider_one_id: rider.id
         )
       if group.save
         @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider, current_user).deliver_later 
+        UserMailer.invite_email(rider, inviter).deliver_later 
         render :index
       else
         render json: {error: "Group Not Saved"}
