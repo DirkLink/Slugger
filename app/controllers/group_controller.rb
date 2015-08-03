@@ -71,17 +71,8 @@ class GroupController < ApplicationController
       end 
       render json: {error: "Group is Full"}
     else
-      group = Group.new(
-        driver_id: current_user.id,
-        rider_one_id: rider.id
-        )
-      if group.save
-        @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
-        UserMailer.invite_email(rider, current_user).deliver_later 
-        render :index
-      else
-        render json: {error: "Group Not Saved"}
-      end
+      UserMailer.invite_email(rider, current_user).deliver_later 
+      render :index
     end
   end
 
