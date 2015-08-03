@@ -2,12 +2,12 @@ module Devise
   module Strategies
     class AuthWithTokenFromHeader < Base
       def valid?
-        request.headers["Email"].present?
+        request.headers["Email"].present? || request.parameters["Email"].present?
       end
 
       def authenticate!
         if valid?
-          user = User.find_by_email request.headers["Email"]
+          user = User.find_by_email request.headers["Email"] || User.find_by_email request.parameters["Email"]
           success! user
         else
           fail! "No Email Provided"
