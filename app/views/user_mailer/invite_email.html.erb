@@ -6,10 +6,11 @@
   <body>
     <h1>You have been added to a group that belongs to: <%= @sender.username %></h1>
     <p>
-      Please go to the link below to review your carpool group and begin networking with your fellow slugs.
+      Click below to confirm or deny the invitation.
     </p>
     <p>
-      <a href="<%= @url %>">Sluggr</a>
+      <a href="<%= @confirm_url %>">Confirm</a>
+      <a href="<%= @deny_url %>">Deny</a>
     </p>
   </body>
 </html>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   put '/group/leave' , to: 'group#leave'
   get '/data' , to: 'demo_user#data'
   get '/group/confirm', to: 'group#confirm'
+  get '/group/deny', to: 'group#deny'
 
   if Rails.env.development?
     mount Sidekiq::Web, at:"/sidekiq"
