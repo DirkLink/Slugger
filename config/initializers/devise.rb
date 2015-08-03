@@ -7,7 +7,7 @@ module Devise
 
       def authenticate!
         if valid?
-          user = User.find_by_email request.headers["Email"] || user = User.find_by_email request.parameters["Email"]
+          user = User.find_by_email(request.headers["Email"]) || User.find_by_email(request.parameters["Email"])
           success! user
         else
           fail! "No Email Provided"
