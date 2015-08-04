@@ -18,6 +18,7 @@ class GroupController < ApplicationController
     inviter = User.find params[:inviter]
     rider = User.find params[:invitee]
     if inviter.group 
+      group = inviter.group
       if group.rider_one_id == nil
         group.update(rider_one_id: rider.id)
         redirect_to url and return
