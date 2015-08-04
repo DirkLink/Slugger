@@ -45,33 +45,33 @@ class GroupController < ApplicationController
   end
 
   def invite
-    rider = User.find params[:rider_id]
+    @rider = User.find params[:rider_id]
     if current_user.group       
       group = current_user.group
       @group = [group.driver, group.rider_one, group.rider_two, group.rider_three, group.rider_four]
       if group.rider_one_id == nil
-        UserMailer.invite_email(rider, current_user).deliver_later
+        UserMailer.invite_email(@rider, current_user).deliver_later
         @group 
         render :index and return
       end
       if group.rider_two_id == nil
         @group
-        UserMailer.invite_email(rider, current_user).deliver_later
+        UserMailer.invite_email(@rider, current_user).deliver_later
         render :index and return
       end
       if group.rider_three_id == nil
         @group
-        UserMailer.invite_email(rider, current_user).deliver_later 
+        UserMailer.invite_email(@rider, current_user).deliver_later 
         render :index and return
       end
       if group.rider_four_id == nil
         @group
-        UserMailer.invite_email(rider, current_user).deliver_later 
+        UserMailer.invite_email(@rider, current_user).deliver_later 
         render :index and return
       end 
       render json: {error: "Group is Full"}
     else
-      UserMailer.invite_email(rider, current_user).deliver_later 
+      UserMailer.invite_email(@rider, current_user).deliver_later 
       render :index
     end
   end
