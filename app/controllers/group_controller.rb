@@ -10,11 +10,11 @@ class GroupController < ApplicationController
   end
 
   def deny
-    redirect_to "sluggr.herokuapp.com"
+    redirect_to "https://sluggr.herokuapp.com"
   end
 
   def confirm
-    url = "sluggr.herokuapp.com"
+    url = "https://sluggr.herokuapp.com"
     inviter = User.find params[:inviter]
     rider = User.find params[:invitee]
     if inviter.group 
