@@ -31,6 +31,7 @@ group :production do
   gem 'rails_12factor'
 end
 
+gem 'rollbar', '~> 1.2.7'
 gem 'cancancan'
 gem 'devise'
 gem 'slim-rails'
