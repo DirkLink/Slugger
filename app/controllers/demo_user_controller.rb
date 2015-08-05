@@ -44,8 +44,8 @@ class DemoUserController < ApplicationController
     itin = current_user.itinerary
     itin.morning_time = Time.parse(params[:itinerary][:morning_time]) if params[:itinerary][:morning_time]
     itin.evening_time = Time.parse(params[:itinerary][:evening_time]) if params[:itinerary][:evening_time]
-    itin.home_locale = Time.parse(params[:itinerary][:home_locale]) if params[:itinerary][:home_locale]
-    itin.work_locale = Time.parse(params[:itinerary][:work_locale]) if params[:itinerary][:work_locale]
+    itin.home_locale = params[:itinerary][:home_locale]
+    itin.work_locale = params[:itinerary][:work_locale]
 
     user_params = params.require(:user).permit :first_name, :last_name, :email, :username, :driver, :bio, :preferences
     if user.update(user_params) && itin.save
