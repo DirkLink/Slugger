@@ -11,7 +11,9 @@ class DemoUserController < ApplicationController
   def login
     if current_user
       if current_user.itinerary
-        render json: {user: current_user, itinerary: current_user.itinerary }
+        @users = [current_user]
+        render :index
+        # render json: {user: current_user, itinerary: current_user.itinerary }
       else
         render json: {user: current_user, itinerary: Itinerary.new }
       end
@@ -33,7 +35,9 @@ class DemoUserController < ApplicationController
       itin = Itinerary.new
       itin.user_id = new_user.id
       itin.save
-      render json: { user: new_user, itinerary: itin }
+      @users = [current_user]
+      render :index
+      # render json: { user: new_user, itinerary: itin }
     else 
       render json: { error: "registration failed" }
     end
@@ -52,7 +56,9 @@ class DemoUserController < ApplicationController
       if itin.home_locale && itin.work_locale
         MapsJob.perform_later itin   
       end
-      render json: { user: current_user, itinerary: itin }
+      @users = [current_user]
+      render :index
+      # render json: { user: current_user, itinerary: itin }
     else
       render json: { error: "update failed" }
     end 
