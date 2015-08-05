@@ -39,4 +39,18 @@ class User < ActiveRecord::Base
       userlist
     end
   end 
+
+  def as_json opts
+    {
+      id:              id,
+      first_name:      first_name,
+      email:           email,
+      last_name:       last_name,
+      username:        username,
+      driver:          driver,
+      last_login:      last_sign_in_at,
+      preferences:     preferences,
+      bio:             bio
+    }
+  end
 end

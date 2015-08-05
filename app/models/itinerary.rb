@@ -32,4 +32,17 @@ class Itinerary < ActiveRecord::Base
       self.morning_time.strftime("%I:%M %p")
     end
   end
+
+  def as_json opts
+    {
+      morning_time:    clean_home_time,
+      evening_time:    clean_work_time,
+      home_locale:     home_locale,
+      work_locale:     work_locale,
+      home_lat:        home_lat,
+      home_lng:        home_lng,
+      work_lat:        work_lat,
+      work_lng:        work_lng
+    }
+  end
 end
