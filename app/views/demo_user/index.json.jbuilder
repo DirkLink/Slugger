@@ -6,9 +6,10 @@ json.user @users do |user|
   json.username user.username
   json.driver user.driver
   json.bio user.bio
+  json.last_login user.last_sign_in_at
   json.preferences user.preferences
-  json.morning_time user.itinerary.morning_time
-  json.evening_time user.itinerary.evening_time
+  json.morning_time user.itinerary.clean_home_time
+  json.evening_time user.itinerary.clean_work_time
   json.home_locale user.itinerary.home_locale
   json.work_locale user.itinerary.work_locale
   json.home_lat user.itinerary.home_lat

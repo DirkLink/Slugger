@@ -20,4 +20,12 @@ class Itinerary < ActiveRecord::Base
       Haversine.distance(itin1.work_lat, itin1.work_lng, self.work_lat, self.work_lng).to_miles
     end
   end
+
+  def clean_work_time
+    self.evening_time.strftime("%I:%M %p")
+  end
+
+  def clean_home_time
+    self.morning_time.strftime("%I:%M %p")
+  end
 end

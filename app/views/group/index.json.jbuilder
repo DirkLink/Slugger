@@ -7,6 +7,7 @@ json.group @group do |user|
     json.username user.username
     json.driver user.driver
     json.bio user.bio
+    json.last_login user.last_sign_in_at
     json.preferences user.preferences
     json.morning_time user.itinerary.morning_time
     json.evening_time user.itinerary.evening_time
