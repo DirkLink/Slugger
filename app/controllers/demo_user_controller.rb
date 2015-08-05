@@ -35,7 +35,7 @@ class DemoUserController < ApplicationController
       itin = Itinerary.new
       itin.user_id = new_user.id
       itin.save
-      @users = [current_user]
+      @users = [new_user]
       render :index
       # render json: { user: new_user, itinerary: itin }
     else 
@@ -56,7 +56,7 @@ class DemoUserController < ApplicationController
       if itin.home_locale && itin.work_locale
         MapsJob.perform_later itin   
       end
-      @users = [current_user]
+      @users = [user]
       render :index
       # render json: { user: current_user, itinerary: itin }
     else
