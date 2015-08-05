@@ -22,10 +22,14 @@ class Itinerary < ActiveRecord::Base
   end
 
   def clean_work_time
-    self.evening_time.strftime("%I:%M %p")
+    if self.evening_time
+      self.evening_time.strftime("%I:%M %p")
+    end
   end
 
   def clean_home_time
-    self.morning_time.strftime("%I:%M %p")
+    if self.morning_time
+      self.morning_time.strftime("%I:%M %p")
+    end
   end
 end
