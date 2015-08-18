@@ -58,4 +58,23 @@ class DemoUserController < ApplicationController
     end 
   end
 
+  def edit_ios
+    user = current_user
+    itin = current_user.itinerary
+    itin.morning_time = Time.parse(params[:morning_time]) if params[:morning_time]
+    itin.evening_time = Time.parse(params[:evening_time]) if params[:evening_time]
+    itin.home_locale = params[:home_locale]
+    itin.work_locale = params[:work_locale]
+
+    user_params = params.permit :first_name, :last_name, :email, :username, :driver, :bio, :preferences
+    if user.update(user_params) && itin.update(itin_params)
+      if itin.home_locale && itin.work_locale
+        MapsJob.perform_later itin   
+      end
+      render json: { user: current_user, itinerary: itin }
+    else
+      render json: { error: "update failed" }
+    end 
+  end
+
 end
