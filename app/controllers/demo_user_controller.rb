@@ -77,9 +77,9 @@ class DemoUserController < ApplicationController
       if itin.home_locale && itin.work_locale
         MapsJob.perform_later itin   
       end
+      fail
       render json: { user: current_user, itinerary: itin }
     else
-      fail
       render json: { error: "update failed" }
     end 
   end
@@ -97,9 +97,9 @@ class DemoUserController < ApplicationController
       itin = Itinerary.new
       itin.user_id = new_user.id
       itin.save
+      fail
       render json: { user: new_user, itinerary: itin }
     else 
-      fail
       render json: { error: "registration failed" }
     end
   end
