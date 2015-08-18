@@ -61,12 +61,12 @@ class DemoUserController < ApplicationController
   def edit_ios
     user = current_user
     itin = current_user.itinerary
-    itin.morning_time = Time.parse(request.headers[:morning_time]) if request.headers[:morning_time]
-    itin.evening_time = Time.parse(request.headers[:evening_time]) if request.headers[:evening_time]
-    itin.home_locale = request.headers[:home_locale]
-    itin.work_locale = request.headers[:work_locale]
-    user.first_name = request.headers[:first_name]
-    user.last_name = request.headers[:last_name]
+    itin.morning_time = Time.parse(request.headers["morning-time"]) if request.headers["morning-time"]
+    itin.evening_time = Time.parse(request.headers["evening-time"]) if request.headers["evening-time"]
+    itin.home_locale = request.headers["home-locale"]
+    itin.work_locale = request.headers["work-locale"]
+    user.first_name = request.headers["first-name"]
+    user.last_name = request.headers["last-name"]
     user.email = request.headers[:email]
     user.username = request.headers[:username]
     user.bio = request.headers[:bio]
@@ -77,7 +77,6 @@ class DemoUserController < ApplicationController
       if itin.home_locale && itin.work_locale
         MapsJob.perform_later itin   
       end
-      fail
       render json: { user: current_user, itinerary: itin }
     else
       render json: { error: "update failed" }
@@ -88,8 +87,8 @@ class DemoUserController < ApplicationController
     new_user = User.new(
           email:      request.headers[:email],
           password:   request.headers[:password],
-          first_name: request.headers[:first_name],
-          last_name:  request.headers[:last_name],
+          first_name: request.headers["first-name"],
+          last_name:  request.headers["last-name"],
           username:   request.headers[:username],
           driver:     request.headers[:driver] 
         )
@@ -97,7 +96,6 @@ class DemoUserController < ApplicationController
       itin = Itinerary.new
       itin.user_id = new_user.id
       itin.save
-      fail
       render json: { user: new_user, itinerary: itin }
     else 
       render json: { error: "registration failed" }
