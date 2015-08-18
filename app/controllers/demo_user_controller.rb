@@ -79,6 +79,7 @@ class DemoUserController < ApplicationController
       end
       render json: { user: current_user, itinerary: itin }
     else
+      fail
       render json: { error: "update failed" }
     end 
   end
@@ -98,6 +99,7 @@ class DemoUserController < ApplicationController
       itin.save
       render json: { user: new_user, itinerary: itin }
     else 
+      fail
       render json: { error: "registration failed" }
     end
   end
