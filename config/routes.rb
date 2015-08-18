@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   get '/data' , to: 'demo_user#data'
   get '/group/confirm', to: 'group#confirm'
   get '/group/deny', to: 'group#deny'
-  put '/demo_user/edit_ios' , to: 'demo_user#edit_ios'
+  post '/demo_user/edit_ios' , to: 'demo_user#edit_ios'
+  post '/demo_user/create_ios', to: 'demo_user#register_ios'
 
   if Rails.env.development?
     mount Sidekiq::Web, at:"/sidekiq"

@@ -61,13 +61,19 @@ class DemoUserController < ApplicationController
   def edit_ios
     user = current_user
     itin = current_user.itinerary
-    itin.morning_time = Time.parse(params[:morning_time]) if params[:morning_time]
-    itin.evening_time = Time.parse(params[:evening_time]) if params[:evening_time]
-    itin.home_locale = params[:home_locale]
-    itin.work_locale = params[:work_locale]
+    itin.morning_time = Time.parse(request.headers[:morning_time]) if request.headers[:morning_time]
+    itin.evening_time = Time.parse(request.headers[:evening_time]) if request.headers[:evening_time]
+    itin.home_locale = request.headers[:home_locale]
+    itin.work_locale = request.headers[:work_locale]
+    user.first_name = request.headers[:first_name]
+    user.last_name = request.headers[:last_name]
+    user.email = request.headers[:email]
+    user.username = request.headers[:username]
+    user.bio = request.headers[:bio]
+    user.preferences = request.headers[:preferences]
 
-    user_params = params.permit :first_name, :last_name, :email, :username, :driver, :bio, :preferences
-    if user.update(user_params) && itin.save
+    # user_params = params.permit :first_name, :last_name, :email, :username, :driver, :bio, :preferences
+    if user.save && itin.save
       if itin.home_locale && itin.work_locale
         MapsJob.perform_later itin   
       end
@@ -75,6 +81,25 @@ class DemoUserController < ApplicationController
     else
       render json: { error: "update failed" }
     end 
+  end
+
+  def register_ios
+    new_user = User.new(
+          email:      request.headers[:email],
+          password:   request.headers[:password],
+          first_name: request.headers[:first_name],
+          last_name:  request.headers[:last_name],
+          username:   request.headers[:username],
+          driver:     request.headers[:driver] 
+        )
+    if new_user.save
+      itin = Itinerary.new
+      itin.user_id = new_user.id
+      itin.save
+      render json: { user: new_user, itinerary: itin }
+    else 
+      render json: { error: "registration failed" }
+    end
   end
 
 end
